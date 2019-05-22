@@ -32,7 +32,6 @@ The video results are in:
 
 ./test_videos_output/solidYellowLeft_normal.mp4
 
-
 ### 2. Identify potential shortcomings with your current pipeline
 
 As soon as I applied the pipeline to videos I noticed that the lane lines are jumpy and not smooth. Tuning the Canny and Hough parameters helped with fixing the jumpiness but I was not satisfied with the results. To smooth the detections I put in a very simple linear Kalman filter as implemented in the notebook. I assumed a constant unknown process noise (which I hoped would handle the car motion and stabilize the detections). The state vector only considers the slope and intercept of the lane lines. I tried to balance the process and the measurement noise to make the detections smooth enough but also follow the measurements such that the detections do not get “stuck” and not follow the actual lane.
