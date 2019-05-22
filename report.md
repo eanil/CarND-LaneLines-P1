@@ -28,32 +28,19 @@ Here is what the test image looks like:
 
 The video results are in:
 
-[vid1]: ./test_videos_output/solidWhiteRight_normal.mp4
-[vid2]: ./test_videos_output/solidYellowLeft_normal.mp4
-
 ./test_videos_output/solidWhiteRight_normal.mp4
+./test_videos_output/solidYellowLeft_normal.mp4
 
-![alt text][vid1]
-
- ./test_videos_output/solidYellowLeft_normal.mp4
-
-![alt text][vid2]
 
 ### 2. Identify potential shortcomings with your current pipeline
 
 As soon as I applied the pipeline to videos I noticed that the lane lines are jumpy and not smooth. Tuning the Canny and Hough parameters helped with fixing the jumpiness but I was not satisfied with the results. To smooth the detections I put in a very simple linear Kalman filter as implemented in the notebook. I assumed a constant unknown process noise (which I hoped would handle the car motion and stabilize the detections). The state vector only considers the slope and intercept of the lane lines. I tried to balance the process and the measurement noise to make the detections smooth enough but also follow the measurements such that the detections do not get “stuck” and not follow the actual lane.
 
 The kalman filtered results are shown in:
-[vid3]: ./test_videos_output/solidWhiteRight_normal.mp4
-[vid4]: ./test_videos_output/solidYellowLeft_normal.mp4
 
 ./test_video_output/solidYellowLeft_kalman.mp4
 
-![alt text][vid3]
-
 ./test_video_output/solidWhiteRight_kalman.mp4
-
-![alt text][vid3]
 
 Another shortcoming is the technique is very sensitive to image quality and for every lighting and road situation it would need to be tuned (i.e., not robust in general). I would not trust a car that is using this filter as is.
 Finally, turns and especially sudden maneuvers may not be handled very well. The Kalman filter may lag too behind. 
